@@ -9,6 +9,15 @@ one to a contactless reader by holding the phone to it.
 > own tags. It does not, and on stock Android cannot, clone secured access cards
 > (see [Limitations](#limitations)).
 
+## Download
+
+Once a release build has run, install it directly on your phone from:
+
+**https://github.com/scottsart1/Key/releases/latest/download/HouseKey-debug.apk**
+
+Open that link on the phone, then allow installing from unknown sources if
+prompted. A physical NFC-capable device is required to emulate or read tags.
+
 ## What it does
 
 - **Emulate an NDEF Type 4 tag** exposing plain text or a link/URL. Any NFC
