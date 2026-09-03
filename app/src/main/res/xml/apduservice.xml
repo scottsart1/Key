@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Declares this Host Card Emulation service to the OS.
+
+  The static AID below (D2760000850101) is the standard NFC Forum "Type 4 Tag"
+  / NDEF Tag Application identifier. Declaring it lets contactless readers (and
+  other phones) select this app and read the NDEF message it emulates.
+
+  Custom, user-defined AIDs (for raw APDU "keys") are registered at runtime with
+  CardEmulation.registerAidsForService(...) into the same "other" category.
+
+  requireDeviceUnlock="false" lets emulation respond while the screen is locked,
+  matching how a physical fob behaves. Set it to "true" to require an unlock.
+-->
+<host-apdu-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/hce_service_description"
+    android:requireDeviceUnlock="false">
+
+    <aid-group
+        android:category="other"
+        android:description="@string/aid_group_ndef_description">
+        <aid-filter android:name="D2760000850101" />
+    </aid-group>
+
+</host-apdu-service>

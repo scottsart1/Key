@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">HouseKey</string>
+
+    <!-- HCE service metadata -->
+    <string name="hce_service_description">HouseKey emulated credential</string>
+    <string name="aid_group_ndef_description">NDEF tag emulation</string>
+
+    <!-- Screens -->
+    <string name="title_keys">My Keys</string>
+    <string name="title_add_key">Add key</string>
+    <string name="title_edit_key">Edit key</string>
+    <string name="title_read_tag">Read a tag</string>
+    <string name="title_about">About &amp; limitations</string>
+
+    <!-- Actions -->
+    <string name="action_add">Add key</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_import_nfc">Import from tag</string>
+    <string name="action_read_tag">Read a tag</string>
+    <string name="action_about">About</string>
+    <string name="action_use">Emulate this key</string>
+    <string name="action_stop">Stop emulating</string>
+
+    <!-- Empty state -->
+    <string name="empty_keys_title">No keys yet</string>
+    <string name="empty_keys_body">Add a key manually, or read one of your own NFC tags to import it.</string>
+
+    <!-- Status card -->
+    <string name="status_active_format">Emulating: %1$s</string>
+    <string name="status_inactive">Not emulating any key</string>
+    <string name="status_tap_hint">Hold the phone to the reader to present the active key.</string>
+
+    <!-- Warnings -->
+    <string name="warn_no_nfc">This device has no NFC hardware. Emulation and tag reading are unavailable.</string>
+    <string name="warn_nfc_disabled">NFC is turned off. Enable it in system settings to emulate or read tags.</string>
+    <string name="warn_no_hce">This device does not support Host Card Emulation, so it cannot emulate cards.</string>
+    <string name="warn_not_default">HouseKey is not the default for tap responses. Some readers may not reach it until you set it as default in system NFC settings.</string>
+
+    <!-- Add/edit form -->
+    <string name="label_name">Name</string>
+    <string name="label_type">Type</string>
+    <string name="label_text">Text</string>
+    <string name="label_uri">URL / URI</string>
+    <string name="label_aid">Application ID (AID, hex)</string>
+    <string name="label_select_response">SELECT response (hex)</string>
+    <string name="label_apdu_pairs">APDU command → response pairs</string>
+    <string name="hint_apdu_pairs">One pair per line: COMMANDHEX = RESPONSEHEX</string>
+    <string name="type_ndef_text">NDEF text</string>
+    <string name="type_ndef_uri">NDEF link</string>
+    <string name="type_raw_apdu">Raw APDU</string>
+
+    <!-- Validation -->
+    <string name="err_name_required">Enter a name</string>
+    <string name="err_content_required">Enter the content to emulate</string>
+    <string name="err_aid_invalid">AID must be 5–16 bytes of hex (10–32 hex characters)</string>
+    <string name="err_hex_invalid">Not valid hexadecimal</string>
+
+    <!-- Read tag -->
+    <string name="read_hint">Hold an NFC tag or card to the back of the phone.</string>
+    <string name="read_none">Nothing read yet.</string>
+    <string name="read_uid">UID: %1$s</string>
+    <string name="read_tech">Technologies: %1$s</string>
+    <string name="read_ndef">NDEF content: %1$s</string>
+    <string name="read_import">Import as key</string>
+    <string name="read_cannot_import">This tag has no NDEF content to import. You can still note its UID.</string>
+
+    <!-- About -->
+    <string name="about_body">HouseKey turns your phone into an emulated NFC credential using Android Host Card Emulation (HCE).\n\nWhat works:\n• Emulating an NFC Forum Type 4 tag that exposes text or a link — readable by NFC readers and other phones.\n• Responding to a custom Application ID (AID) with APDU responses you define, for ISO-DEP access systems.\n\nWhat does NOT work on a normal (non-rooted) phone:\n• Cloning a fob or card that is identified only by its UID (most cheap building fobs, MIFARE Classic). Android assigns the emulated UID itself; apps cannot spoof another tag’s UID.\n• Systems using secret cryptographic keys inside the original card (MIFARE DESFire, HID iCLASS, most modern access control). The secret never leaves the card, so it cannot be copied.\n\nUse this only with credentials you own or are authorised to use.</string>
+    <string name="about_authorized_use">Only emulate credentials you own or are explicitly authorised to use.</string>
+</resources>

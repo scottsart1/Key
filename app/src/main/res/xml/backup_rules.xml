@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!--
+      Exclude the emulation preferences and the credential database from cloud
+      backups: stored credentials should not leave the device automatically.
+    -->
+    <exclude domain="sharedpref" path="emulation_state.xml" />
+    <exclude domain="database" path="housekey.db" />
+</full-backup-content>
