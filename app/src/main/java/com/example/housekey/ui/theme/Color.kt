@@ -1,0 +1,41 @@
+package com.example.housekey.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+// Light scheme
+val md_primary = Color(0xFF1B5E4B)
+val md_onPrimary = Color(0xFFFFFFFF)
+val md_primaryContainer = Color(0xFFA7F2D0)
+val md_onPrimaryContainer = Color(0xFF002114)
+val md_secondary = Color(0xFF4C6358)
+val md_onSecondary = Color(0xFFFFFFFF)
+val md_secondaryContainer = Color(0xFFCEE9DA)
+val md_onSecondaryContainer = Color(0xFF092017)
+val md_background = Color(0xFFFBFDF9)
+val md_onBackground = Color(0xFF191C1A)
+val md_surface = Color(0xFFFBFDF9)
+val md_onSurface = Color(0xFF191C1A)
+val md_surfaceVariant = Color(0xFFDBE5DD)
+val md_onSurfaceVariant = Color(0xFF404943)
+val md_error = Color(0xFFBA1A1A)
+val md_onError = Color(0xFFFFFFFF)
+val md_outline = Color(0xFF707973)
+
+// Dark scheme
+val md_primary_dark = Color(0xFF8BD5B5)
+val md_onPrimary_dark = Color(0xFF003825)
+val md_primaryContainer_dark = Color(0xFF005138)
+val md_onPrimaryContainer_dark = Color(0xFFA7F2D0)
+val md_secondary_dark = Color(0xFFB2CCBE)
+val md_onSecondary_dark = Color(0xFF1E352B)
+val md_secondaryContainer_dark = Color(0xFF344C41)
+val md_onSecondaryContainer_dark = Color(0xFFCEE9DA)
+val md_background_dark = Color(0xFF191C1A)
+val md_onBackground_dark = Color(0xFFE1E3DF)
+val md_surface_dark = Color(0xFF191C1A)
+val md_onSurface_dark = Color(0xFFE1E3DF)
+val md_surfaceVariant_dark = Color(0xFF404943)
+val md_onSurfaceVariant_dark = Color(0xFFBFC9C2)
+val md_error_dark = Color(0xFFFFB4AB)
+val md_onError_dark = Color(0xFF690005)
+val md_outline_dark = Color(0xFF8A938C)

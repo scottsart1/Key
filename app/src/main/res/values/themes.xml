@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Base application theme. Actual colour/typography is provided by Jetpack
+      Compose (Material 3) at runtime; this platform theme only removes the
+      action bar and sets a neutral window background to avoid a flash before
+      Compose draws.
+    -->
+    <style name="Theme.HouseKey" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
