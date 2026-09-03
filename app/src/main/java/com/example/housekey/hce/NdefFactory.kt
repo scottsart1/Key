@@ -23,7 +23,7 @@ object NdefFactory {
     /**
      * Capability Container file (15 bytes):
      * CCLEN=000F, mapping v2.0, MLe=00F6, MLc=00FF, then the NDEF File Control
-     * TLV: file id E104, max size 0400, read granted (00), write denied (FF).
+     * TLV: file id E104, max size 8000, read granted (00), write denied (FF).
      */
     val CC_FILE = byteArrayOf(
         0x00, 0x0F,             // CCLEN
@@ -32,7 +32,7 @@ object NdefFactory {
         0x00, 0xFF.toByte(),    // MLc (max C-APDU data)
         0x04, 0x06,             // NDEF File Control TLV: T=04, L=06
         0xE1.toByte(), 0x04,    // NDEF file id
-        0x04, 0x00,             // max NDEF file size (1024)
+        0x80.toByte(), 0x00,    // max NDEF file size (32768)
         0x00,                   // read access granted
         0xFF.toByte(),          // write access denied (read-only)
     )
@@ -101,16 +101,27 @@ object NdefFactory {
     private val TYPE_URI = byteArrayOf('U'.code.toByte())
 
     /**
-     * Assembles a short NDEF record (payload < 256 bytes) that is both the first
-     * and last record of its message.
+     * Assembles an NDEF record that is both the first and last record of its
+     * message. Uses the compact short-record form (1-byte length) when the
+     * payload fits in 255 bytes, and the long form (4-byte length) otherwise, so
+     * long text/URIs are still encoded correctly.
      */
     private fun record(type: ByteArray, payload: ByteArray): ByteArray {
         val out = ByteArrayOutputStream()
-        // Flags: MB(0x80) | ME(0x40) | SR(0x10) | TNF. Chunk/IL cleared.
-        val header = 0x80 or 0x40 or 0x10 or TNF_WELL_KNOWN
-        out.write(header)
+        val shortRecord = payload.size <= 0xFF
+        // Flags: MB(0x80) | ME(0x40) | [SR(0x10) when short] | TNF. Chunk/IL cleared.
+        var flags = 0x80 or 0x40 or TNF_WELL_KNOWN
+        if (shortRecord) flags = flags or 0x10
+        out.write(flags)
         out.write(type.size)
-        out.write(payload.size and 0xFF)
+        if (shortRecord) {
+            out.write(payload.size and 0xFF)
+        } else {
+            out.write((payload.size ushr 24) and 0xFF)
+            out.write((payload.size ushr 16) and 0xFF)
+            out.write((payload.size ushr 8) and 0xFF)
+            out.write(payload.size and 0xFF)
+        }
         out.write(type)
         out.write(payload)
         return out.toByteArray()

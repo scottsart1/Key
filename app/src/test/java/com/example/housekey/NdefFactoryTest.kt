@@ -27,6 +27,16 @@ class NdefFactoryTest {
     }
 
     @Test
+    fun textRecord_usesLongFormWhenPayloadExceeds255Bytes() {
+        // 300-char text -> payload 303 bytes -> long record: no SR flag, 4-byte length.
+        val file = NdefFactory.ndefFileForText("A".repeat(300))
+        assertEquals(312, file.size)
+        // NLEN (record length 0x0136) then header C1 (MB|ME|TNF, SR cleared),
+        // type len 01, 4-byte payload length 0000012F, type 'T'(54), status 02.
+        assertEquals("0136C1010000012F540265", Hex.encode(file.copyOfRange(0, 11)))
+    }
+
+    @Test
     fun capabilityContainer_is15BytesAndWellFormed() {
         val cc = NdefFactory.CC_FILE
         assertEquals(15, cc.size)

@@ -26,7 +26,7 @@ A Type 4 Tag reader performs roughly this sequence; HouseKey answers each step i
 00 FF        MLc  (max C-APDU data)
 04 06        NDEF File Control TLV: T=04, L=06
 E1 04        NDEF file id
-04 00        Max NDEF file size (1024)
+80 00        Max NDEF file size (32768)
 00           Read access granted
 FF           Write access denied (read-only)
 ```

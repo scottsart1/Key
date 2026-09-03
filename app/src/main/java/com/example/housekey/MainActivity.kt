@@ -17,8 +17,16 @@ class MainActivity : ComponentActivity() {
     private val nfcAdapter: NfcAdapter? by lazy { NfcAdapter.getDefaultAdapter(this) }
     private val viewModel: KeyViewModel by viewModels()
 
-    /** Set while the read-tag screen is visible; receives parsed tag readings. */
+    /** Callback that receives parsed tag readings while the read screen is open. */
     private var onTagRead: ((TagReading) -> Unit)? = null
+
+    /**
+     * Whether the read screen currently wants reader mode. Reader mode is bound to
+     * the foreground: the OS tears it down on pause, so we re-arm it on resume as
+     * long as the screen still wants it. Without this, backgrounding while on the
+     * read screen would silently leave reader mode off.
+     */
+    private var readerRequested = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +35,8 @@ class MainActivity : ComponentActivity() {
             HouseKeyTheme {
                 AppRoot(
                     viewModel = viewModel,
-                    enableReader = { callback -> enableReaderMode(callback) },
-                    disableReader = { disableReaderMode() },
+                    enableReader = { callback -> requestReaderMode(callback) },
+                    disableReader = { releaseReaderMode() },
                 )
             }
         }
@@ -37,16 +45,31 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshCapabilities()
+        if (readerRequested) startReaderHardware()
     }
 
     override fun onPause() {
         super.onPause()
-        // Ensure reader mode never lingers into card-emulation use.
-        disableReaderMode()
+        // Stop the hardware but keep the request, so onResume can re-arm it.
+        stopReaderHardware()
     }
 
-    private fun enableReaderMode(onRead: (TagReading) -> Unit) {
+    /** Called by the read screen when it appears; arms reader mode. */
+    private fun requestReaderMode(onRead: (TagReading) -> Unit) {
         onTagRead = onRead
+        readerRequested = true
+        startReaderHardware()
+    }
+
+    /** Called by the read screen when it leaves; fully disarms reader mode. */
+    private fun releaseReaderMode() {
+        readerRequested = false
+        onTagRead = null
+        stopReaderHardware()
+    }
+
+    private fun startReaderHardware() {
+        if (onTagRead == null) return
         val flags = NfcAdapter.FLAG_READER_NFC_A or
             NfcAdapter.FLAG_READER_NFC_B or
             NfcAdapter.FLAG_READER_NFC_F or
@@ -63,8 +86,7 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-    private fun disableReaderMode() {
-        onTagRead = null
+    private fun stopReaderHardware() {
         nfcAdapter?.disableReaderMode(this)
     }
 }
